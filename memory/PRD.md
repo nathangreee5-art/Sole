@@ -23,6 +23,11 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 ## Credentials
 - Admin: admin@soleserenity.co.uk / SoleAdmin2025! (see memory/test_credentials.md)
 
+## Session 2 additions (verified)
+- NEW on-screen Booking Confirmation on /book: after submit, shows order number, access code, direct order link with copy buttons, "View my order" + "Track later". (iteration_5: 8/8 backend + full frontend flow passed.)
+- Royal Mail ACTIVATED (SHIPPING_PROVIDER=royal_mail): inbound Returns Portal URL live (https://return.royalmail.com/cf63...), outbound Click & Drop API key + service code (NDA) configured. Test Mode kept ON → outbound labels simulated (TEST tracking, no real order/charge) until user flips test_mode off. Service code "NDA" only exercised for real once test mode is off — verify then.
+- Contact / ticket service verified end-to-end via live calls: POST /api/contact -> ticket + admin notify + customer receipt; two-way conversation (customer /api/conversations, admin /api/admin/tickets reply); all Mailgun emails status=sent.
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.

@@ -1,0 +1,48 @@
+{
+  "summary": "Iteration 5 verifies (a) NEW on-screen Booking Confirmation UI on /book, (b) Royal Mail wiring — inbound Returns Portal + outbound Click & Drop in TEST MODE, and (c) regression on order create + checkout. Created /app/backend/tests/test_royal_mail_and_confirmation.py (8 pytest cases) — 8/8 PASSED. Frontend: drove full 5-step Book a Clean flow end-to-end via Playwright (1 pair Quick, 5 required photos, brand/size, name/email/phone + valid UK billing address 'SW1A 1AA' with same-return-address checked, review, submit). Confirmation view (data-testid=booking-confirmation) rendered with confirm-order-number-value=SS-10002, confirm-access-code-value=<32-char token>, confirm-order-link-value matching /order/SS-10002?token=<code>. All copy buttons (confirm-order-number-copy, confirm-access-code-copy, confirm-order-link-copy) visible. 'View my order' navigates to /order/SS-10002?token=... and the tracking page renders (status PENDING_ASSESSMENT). 'Track later' link points to /track. Visiting /track and entering the shown order number + access code also opens the order. Confirmation data correctness verified end-to-end.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "passed_tests": [
+    "pytest TestOrderCreation::test_order_created_sequential_pending — POST /api/orders creates SS-10002 PENDING_ASSESSMENT with 32-char access_token",
+    "pytest TestOrderCreation::test_get_order_with_token — GET /api/orders/{n}?token=<correct> => 200",
+    "pytest TestOrderCreation::test_get_order_wrong_token — GET with wrong token => 403",
+    "pytest TestOrderCreation::test_checkout_blocked_before_approval — POST /api/orders/{n}/checkout before approval => 400",
+    "pytest TestAdminSettings::test_royal_mail_settings — GET /api/admin/settings returns royal_mail.provider='royal_mail', returns_portal_configured=true, returns_portal_url=<configured RM portal>, outbound_api_configured=true, test_mode=true",
+    "pytest TestOrderLifecycleAndLabels::test_approve_and_checkout — approve => APPROVED; then POST /api/orders/{n}/checkout => 200 with stripe.com checkout_url + session_id; GET /api/payments/status/{sid} 200",
+    "pytest TestOrderLifecycleAndLabels::test_generate_inbound_label_portal — POST /admin/orders/{n}/label/generate {type:'inbound'} => shipment.inbound.provider='royal_mail_portal', portal_url matches configured RM Returns Portal, status LABEL_GENERATED, label_ready email logged",
+    "pytest TestOrderLifecycleAndLabels::test_outbound_label_test_mode — drove to READY_FOR_RETURN, then POST label/generate {type:'return'} => shipment.return.provider='test', tracking_number starts with 'TEST', status generated, order RETURN_LABEL_GENERATED, return_dispatched email logged; verified NO real Royal Mail API call (test_mode branch short-circuits)",
+    "Frontend Playwright: full Book a Clean multi-step flow (Step0..Step4) submits successfully",
+    "Frontend: booking-confirmation view renders with order_number/access_code/direct link + copy buttons + View-my-order + Track-later link (/track)",
+    "Frontend: 'View my order' navigates to /order/{n}?token={code} and OrderTracking renders order",
+    "Frontend: /track lookup with order_number + access_code opens the order successfully"
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_royal_mail_and_confirmation.py",
+    "/app/test_reports/pytest/iter5_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "shipping.build_inbound returns provider='royal_mail_portal' (not just 'royal_mail'). The review request used the loose phrase 'provider indicating the royal mail portal' — test asserts substring 'portal' and exact portal_url — passes as intended. If the product spec wants provider='royal_mail', consider renaming for clarity.",
+    "BookAClean.jsx line 355: `const AddressCard = ({ ... }) => {  const set = (k) =>` has a double-space stylistic artefact after the brace — harmless but worth cleaning up.",
+    "Test-mode outbound label logic in order_service.generate_return_label (lines 135-145) correctly avoids calling Royal Mail API when settings.test_mode is true — confirmed by lack of network egress and TEST-prefixed tracking.",
+    "order_service.generate_return_label uses order.get('order_number','').replace('SS-','') to derive tracking suffix — safe but relies on the SS- prefix convention.",
+    "PhotoUploader hidden input elements have no data-testid — only the visible clickable region does; automation had to fall back to ordered input[type=file]. Consider adding data-testid to the hidden inputs for more robust test targeting."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_royal_mail_and_confirmation.py (new)"
+  ],
+  "success_rate": {"backend": "100% (8/8 pytest)", "frontend": "100% of critical booking-confirmation + track flow"},
+  "test_credentials": "admin@soleserenity.co.uk / SoleAdmin2025! (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created SS-10002 via backend pytest (approved, checkout initiated, driven to RETURN_LABEL_GENERATED with test-mode return label). Playwright submitted a second order via UI which became SS-10003 (PENDING_ASSESSMENT). Both are safe to keep or delete. Next order will be SS-10004.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All new booking confirmation UI (data-testid=booking-confirmation, confirm-order-number-value/copy, confirm-access-code-value/copy, confirm-order-link-value/copy, confirm-view-order-button, confirm-track-link) is working end-to-end and the shown access code matches the order's access_token (both direct link and /track lookup succeed). Royal Mail is wired correctly in TEST MODE — inbound label emits the hosted RM Returns Portal URL and outbound label is simulated (TEST tracking). No real RM API calls occur while test_mode=true. If future runs need to test REAL RM outbound labels, first PUT /api/admin/settings {test_mode:false} — do not do this by default. backend_test.py (root-level, non-pytest class-based tester) remains from iter4 for full regression; new pytest file covers iter5-specific concerns.",
+  "rca of the issue": "No bugs found."
+}
