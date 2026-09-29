@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /order
+Disallow: /conversation
+Disallow: /payment
+
+Sitemap: https://soleserenity.co.uk/sitemap.xml
