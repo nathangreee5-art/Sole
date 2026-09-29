@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Check, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Sparkles, ShieldCheck, CheckCircle2, Copy, ExternalLink, Search } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,7 @@ export default function BookAClean() {
   const [special, setSpecial] = useState("");
   const [price, setPrice] = useState({ cleaning_total: 0, shipping_total: 0, grand_total: 0, total_pairs: 0 });
   const [submitting, setSubmitting] = useState(false);
+  const [confirmed, setConfirmed] = useState(null);
 
   useEffect(() => { getServices().then((d) => setServices(d.services)).catch(() => {}); }, []);
 
@@ -91,11 +92,25 @@ export default function BookAClean() {
       const res = await createOrder(payload);
       const o = res.order;
       toast.success(`Order ${o.order_number} submitted for assessment!`);
-      navigate(`/order/${o.order_number}?token=${o.access_token}`);
+      setConfirmed({
+        order_number: o.order_number,
+        access_token: o.access_token,
+        link: `${window.location.origin}/order/${o.order_number}?token=${o.access_token}`,
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       toast.error(err?.response?.data?.detail || "Could not submit your order. Please check your details.");
     } finally { setSubmitting(false); }
   };
+
+  if (confirmed) {
+    return (
+      <BookingConfirmation
+        confirmed={confirmed}
+        onView={() => navigate(`/order/${confirmed.order_number}?token=${confirmed.access_token}`)}
+      />
+    );
+  }
 
   return (
     <div className="ss-container py-10 sm:py-14">
@@ -263,6 +278,66 @@ export default function BookAClean() {
   );
 }
 
+const CopyRow = ({ label, value, testId }) => {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(value); setCopied(true); setTimeout(() => setCopied(false), 1600); }
+    catch { /* clipboard unavailable */ }
+  };
+  return (
+    <div>
+      <Label className="text-[var(--ss-muted)]">{label}</Label>
+      <div className="mt-1.5 flex items-stretch gap-2">
+        <div className="flex-1 ss-mono text-sm text-[var(--ss-fg)] bg-[var(--ss-surface-2)] border border-[var(--ss-border)] rounded-lg px-3 py-2.5 break-all" data-testid={`${testId}-value`}>{value}</div>
+        <Button type="button" variant="outline" onClick={copy} data-testid={`${testId}-copy`} className="shrink-0 border-[var(--ss-border)] bg-transparent text-[var(--ss-fg)] hover:border-[var(--ss-mint)]">
+          {copied ? <Check className="h-4 w-4 text-[var(--ss-mint)]" /> : <Copy className="h-4 w-4" />}
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const BookingConfirmation = ({ confirmed, onView }) => (
+  <div className="ss-container py-12 sm:py-16" data-testid="booking-confirmation">
+    <div className="max-w-2xl mx-auto">
+      <div className="ss-card p-8 sm:p-10 text-center">
+        <div className="mx-auto h-16 w-16 rounded-full bg-[rgba(59,130,246,0.12)] flex items-center justify-center">
+          <CheckCircle2 className="h-9 w-9 text-[var(--ss-mint)]" />
+        </div>
+        <div className="ss-eyebrow mt-5 mb-1">Order received</div>
+        <h1 className="font-display text-3xl sm:text-4xl text-[var(--ss-fg)]">You&rsquo;re all set!</h1>
+        <p className="mt-3 text-[var(--ss-muted)]">
+          Thanks &mdash; your order <span className="text-[var(--ss-fg)] font-semibold">{confirmed.order_number}</span> is in for photo assessment.
+          We&rsquo;ll email you once it&rsquo;s reviewed. You won&rsquo;t be charged until it&rsquo;s approved.
+        </p>
+
+        <div className="mt-7 text-left space-y-4">
+          <CopyRow label="Order number" value={confirmed.order_number} testId="confirm-order-number" />
+          <CopyRow label="Access code (keep this safe)" value={confirmed.access_token} testId="confirm-access-code" />
+          <CopyRow label="Direct order link" value={confirmed.link} testId="confirm-order-link" />
+        </div>
+
+        <div className="mt-6 ss-card p-4 flex items-start gap-3 bg-[rgba(59,130,246,0.05)] border-[rgba(59,130,246,0.25)] text-left">
+          <ShieldCheck className="h-5 w-5 text-[var(--ss-mint)] mt-0.5 shrink-0" />
+          <p className="text-sm text-[var(--ss-fg)]">
+            Save your <b>order number</b> and <b>access code</b> &mdash; you&rsquo;ll need them to track your order.
+            We&rsquo;ve also emailed the link to you. Anyone with this link can view your order.
+          </p>
+        </div>
+
+        <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Button onClick={onView} data-testid="confirm-view-order-button" className="w-full sm:w-auto bg-[var(--ss-mint)] text-[#ffffff] hover:bg-[var(--ss-mint-600)] font-semibold">
+            View my order <ExternalLink className="ml-2 h-4 w-4" />
+          </Button>
+          <Button asChild variant="outline" className="w-full sm:w-auto border-[var(--ss-border)] bg-transparent text-[var(--ss-fg)] hover:border-[var(--ss-mint)]">
+            <a href="/track" data-testid="confirm-track-link"><Search className="mr-2 h-4 w-4" /> Track later</a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const Field = ({ label, value, onChange, placeholder, type = "text", testId }) => (
   <div>
     <Label className="text-[var(--ss-muted)]">{label}</Label>
@@ -277,8 +352,7 @@ const Row = ({ label, value, bold }) => (
   </div>
 );
 
-const AddressCard = ({ title, addr, setAddr, prefix }) => {
-  const set = (k) => (e) => setAddr({ ...addr, [k]: e.target.value });
+const AddressCard = ({ title, addr, setAddr, prefix }) => {  const set = (k) => (e) => setAddr({ ...addr, [k]: e.target.value });
   return (
     <div className="ss-card p-6">
       <h3 className="font-semibold text-[var(--ss-fg)] mb-4">{title}</h3>
