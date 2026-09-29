@@ -5,7 +5,7 @@ import os
 from io import BytesIO
 from datetime import datetime
 
-BASE_URL = "https://premium-clean-flow.preview.emergentagent.com/api"
+BASE_URL = os.environ.get("BACKEND_URL", "https://sole-build.preview.emergentagent.com").rstrip("/") + "/api"
 ADMIN_EMAIL = "admin@soleserenity.co.uk"
 ADMIN_PASSWORD = "SoleAdmin2025!"
 
