@@ -28,6 +28,12 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - Royal Mail ACTIVATED (SHIPPING_PROVIDER=royal_mail): inbound Returns Portal URL live (https://return.royalmail.com/cf63...), outbound Click & Drop API key + service code (NDA) configured. Test Mode kept ON → outbound labels simulated (TEST tracking, no real order/charge) until user flips test_mode off. Service code "NDA" only exercised for real once test mode is off — verify then.
 - Contact / ticket service verified end-to-end via live calls: POST /api/contact -> ticket + admin notify + customer receipt; two-way conversation (customer /api/conversations, admin /api/admin/tickets reply); all Mailgun emails status=sent.
 
+## LIVE / PUBLISH-READY (session 3)
+- Stripe: LIVE mode using the owner's real GB account (sk_live_..., charges_enabled + payouts_enabled + details_submitted all true). STRIPE_MODE=live. STRIPE_WEBHOOK_SECRET blanked — payment confirmation works via polling fallback (GET /api/payments/status). SECURITY: live key was exposed in chat — owner advised to roll it in Stripe and re-set.
+- Royal Mail: LIVE, Test Mode OFF (test_mode=false). Real Click & Drop outbound labels will be created + billed when admin generates them; service code NDA to be validated on first real label. Inbound via Returns Portal.
+- Email: Mailgun EU live (status=sent verified).
+- Deployment readiness: deployment_agent = WARN (deployable; only non-blocking query-perf suggestions). No blockers.
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.
