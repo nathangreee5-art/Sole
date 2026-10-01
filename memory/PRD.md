@@ -34,6 +34,12 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - Email: Mailgun EU live (status=sent verified).
 - Deployment readiness: deployment_agent = WARN (deployable; only non-blocking query-perf suggestions). No blockers.
 
+## SEO / sitemap (session 4)
+- Added frontend/public/sitemap.xml (11 public pages, canonical domain https://soleserenity.co.uk) + robots.txt (allows public, disallows /admin /order /conversation /payment, references sitemap).
+- Verified: /sitemap.xml serves as application/xml (200) even to Googlebot; /robots.txt serves 200. SPA fallback returns HTML only for unknown routes (expected).
+- Google "HTML not XML" error = the submitted URL returned HTML, i.e. soleserenity.co.uk not yet pointed to the app (registrar parked page) OR wrong host submitted. Sitemap <loc> URLs must match the live host.
+- PENDING user input: exact live/deployed domain. Once known, update sitemap <loc> + robots Sitemap line to match, then submit in Google Search Console.
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.
