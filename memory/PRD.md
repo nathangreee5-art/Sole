@@ -61,6 +61,9 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - Self-hosted fonts: downloaded latin woff2 for Bebas Neue (400), Space Grotesk (400/500/600/700), JetBrains Mono (400/600) to public/fonts/; generated public/fonts.css (@font-face, display:swap); index.html now links /fonts.css + preloads 3 key fonts; removed all Google Fonts links. Verified 0 requests to fonts.googleapis/gstatic, headings render in Bebas Neue.
 - Redeploy triggered (deployer job 39ae11cc...) to ship perf + SEO + a11y + fonts to production. PSI retest to be done AFTER deploy completes (live site served old build until then; PSI anon API quota was exhausted this session).
 
+## Session 8 — Google Analytics
+- Added GA4 gtag.js (G-T6QFTBN7SG) to public/index.html head. Verified: gtag+dataLayer ready, page_view hit sent to google-analytics.com/g/collect. NOTE: SPA route changes not auto-tracked (only initial load) — offer route-change tracking if needed. Requires (re)deploy to reach production.
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.
