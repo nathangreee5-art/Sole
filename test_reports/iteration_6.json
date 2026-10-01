@@ -1,0 +1,42 @@
+{
+  "summary": "Frontend-only regression test after logo-sizing bug fix and perf optimisation (React.lazy + IntersectionObserver Reveal). Verified logo renders at correct 1.18 aspect ratio in all placements, all 11 public lazy routes render with 200 + content, admin login + dashboard works, scroll-reveal animations resolve to opacity 1, and the full 5-step booking flow completes with booking-confirmation + order number + access code.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Mobile menu Sheet", "issues": ["Radix DialogContent accessibility warning: missing DialogTitle and aria-describedby on the mobile nav Sheet. Non-blocking, but a11y warning in console. Wrap a VisuallyHidden DialogTitle inside SheetContent."]}
+    ]
+  },
+  "logo_measurements": {
+    "header_desktop": {"w": 47.4, "h": 40, "ratio": 1.184, "naturalWidth": 1092, "naturalHeight": 922},
+    "hero_home": {"w": 341, "h": 288, "ratio": 1.18},
+    "footer": {"w": 57, "h": 48, "ratio": 1.18},
+    "header_mobile": {"w": 43, "h": 36, "ratio": 1.18},
+    "mobile_menu_sheet": {"w": 265, "h": 224, "ratio": 1.18}
+  },
+  "routes_tested": {
+    "/": 200, "/services": 200, "/how-it-works": 200, "/delivery": 200,
+    "/about": 200, "/faq": 200, "/contact": 200, "/terms": 200,
+    "/privacy": 200, "/book": 200, "/track": 200, "/admin/login": "renders", "/admin": "dashboard renders after login"
+  },
+  "scroll_reveal": "Elements with .ss-reveal that enter viewport receive .ss-reveal-in and reach opacity 1 (verified 1/1 in-viewport element visible after scroll). No elements left permanently hidden.",
+  "booking_flow": "Completed Step 1 (service+pairs) -> Step 2 (5 photo uploads) -> Step 3 (shoe details) -> Step 4 (customer details, postcode SW1A 2AA) -> Step 5 (review) -> submit. Received toast 'Order SS-10001 submitted for assessment!' and the data-testid=booking-confirmation page with order number SS-10001 and 32-char access code.",
+  "test_report_links": [],
+  "action_items": [
+    "Low priority a11y: add VisuallyHidden <DialogTitle> inside mobile Sheet to silence Radix warning."
+  ],
+  "critical_code_review_comments": [
+    "Logo.jsx now correctly relies on className only; naturalWidth 1092 confirms full-res asset loads, ratio preserved everywhere.",
+    "Reveal.jsx IntersectionObserver falls back to setShown(true) when IO is undefined — good SSR/old-browser safeguard.",
+    "PhotoUploader buttons expose data-testid on the trigger <button>, not the hidden <input type=file>. Automated tests must select the sibling input. Consider adding a data-testid on the file input too for easier testing."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100%"},
+  "test_credentials": "admin@soleserenity.co.uk / SoleAdmin2025! — works",
+  "seed_data_creation": "Created order SS-10001 (TEST data via booking flow) with test_user@example.com. Not cleaned up.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Logo bug fix verified. Public lazy routes + admin dashboard + full 5-step booking flow all green. Only outstanding minor: Radix Dialog a11y warning on mobile Sheet (missing DialogTitle). Previous iterations 1-5 covered broader scope; this run focused on perf-optimisation regression.",
+  "rca of the issue": "Original bug: Logo.jsx had hardcoded width/height attributes (1092/922) that overrode the Tailwind height-only classes, stretching the header logo to full intrinsic width. Fix (verified): remove width/height HTML attributes so className controls size and the browser preserves intrinsic aspect ratio. Confirmed all logos now render at ratio 1.18 across header (desktop + mobile), hero, footer, and mobile Sheet."
+}

@@ -48,6 +48,14 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - Cleaned index.html: single source of truth for OG/Twitter defaults + LocalBusiness JSON-LD; removed static description/keywords/robots to avoid duplicate meta (Helmet manages per-page). Verified descCount=1 per page.
 - NOTE: SPA (no SSR) — Google renders JS so sees per-page tags; social scrapers use the static OG defaults. Canonical domain = soleserenity.co.uk (update if live domain differs).
 
+## Mobile performance optimisation (session 6)
+- Removed framer-motion (only used in Reveal.jsx) -> rewrote Reveal with IntersectionObserver + CSS (.ss-reveal). Main JS bundle 217kB -> 151kB gzip (-30%).
+- Route-based code splitting: App.js uses React.lazy + Suspense (Home eager; all other public + admin pages lazy) so admin/secondary code is off the homepage.
+- Non-render-blocking Google Fonts (preload + media=print onload swap + noscript fallback) in index.html.
+- Optimised favicon/og logos in public/brand (81/82kB -> 19/30kB). Hero/header logo assets kept full-res (crisp at h-72).
+- BUG FIXED + verified (iteration_6, 100% FE pass): logo stretched due to hardcoded width/height attrs on <img> fighting Tailwind height-only classes; reverted to className-only. Logos render at ratio 1.18 across header/hero/footer/mobile.
+- NOTE: live PSI retest requires a redeploy (changes not yet on the deployed site); Google PSI anonymous API quota was exhausted during this session so live numbers were not re-fetched. Local prod build improvement verified.
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.
