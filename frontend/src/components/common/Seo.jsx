@@ -11,20 +11,23 @@ const DEFAULT_KEYWORDS =
 
 export function Seo({
   title,
+  fullTitle,
   description = DEFAULT_DESCRIPTION,
   keywords = DEFAULT_KEYWORDS,
   path = "",
   noindex = false,
   jsonLd,
 }) {
-  const fullTitle = title
+  const resolvedTitle = fullTitle
+    ? fullTitle
+    : title
     ? `${title} | ${SITE_NAME}`
     : `${SITE_NAME} — Professional Shoe Cleaning, Delivered`;
   const canonical = `${SITE_URL}${path}`;
 
   return (
     <Helmet>
-      <title>{fullTitle}</title>
+      <title>{resolvedTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
