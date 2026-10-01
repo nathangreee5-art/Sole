@@ -56,6 +56,11 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - BUG FIXED + verified (iteration_6, 100% FE pass): logo stretched due to hardcoded width/height attrs on <img> fighting Tailwind height-only classes; reverted to className-only. Logos render at ratio 1.18 across header/hero/footer/mobile.
 - NOTE: live PSI retest requires a redeploy (changes not yet on the deployed site); Google PSI anonymous API quota was exhausted during this session so live numbers were not re-fetched. Local prod build improvement verified.
 
+## Session 7 — a11y + self-hosted fonts + redeploy
+- Mobile menu a11y FIX (verified iteration_7, 100% FE): added sr-only SheetTitle "Navigation menu" + SheetDescription in Header.jsx -> Radix DialogTitle/Description warning gone (0 a11y warnings, aria-labelledby/describedby present).
+- Self-hosted fonts: downloaded latin woff2 for Bebas Neue (400), Space Grotesk (400/500/600/700), JetBrains Mono (400/600) to public/fonts/; generated public/fonts.css (@font-face, display:swap); index.html now links /fonts.css + preloads 3 key fonts; removed all Google Fonts links. Verified 0 requests to fonts.googleapis/gstatic, headings render in Bebas Neue.
+- Redeploy triggered (deployer job 39ae11cc...) to ship perf + SEO + a11y + fonts to production. PSI retest to be done AFTER deploy completes (live site served old build until then; PSI anon API quota was exhausted this session).
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.
