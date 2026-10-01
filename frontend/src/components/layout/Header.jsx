@@ -3,7 +3,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { useApp } from "@/context/AppContext";
 
 const NAV = [
@@ -91,6 +91,8 @@ export const Header = () => {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="bg-[var(--ss-bg-2)] border-[var(--ss-border)] w-[86%] max-w-sm p-0 flex flex-col">
+                <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+                <SheetDescription className="sr-only">Browse Sole Serenity pages and book a clean.</SheetDescription>
                 <div className="flex items-center justify-between p-5 border-b border-[var(--ss-border)]">
                   <Logo className="h-9" />
                   <SheetClose asChild>
