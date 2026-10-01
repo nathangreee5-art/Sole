@@ -1,14 +1,38 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 
-export const Reveal = ({ children, delay = 0, y = 14, className = "" }) => (
-  <motion.div
-    className={className}
-    initial={{ opacity: 0, y }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-  >
-    {children}
-  </motion.div>
-);
+export const Reveal = ({ children, delay = 0, y = 14, className = "" }) => {
+  const ref = useRef(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setShown(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setShown(true);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: "-60px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`ss-reveal ${shown ? "ss-reveal-in" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}s`, "--ss-reveal-y": `${y}px` }}
+    >
+      {children}
+    </div>
+  );
+};
