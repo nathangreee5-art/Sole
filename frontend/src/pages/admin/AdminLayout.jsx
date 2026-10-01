@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { NavLink, useNavigate, Navigate, Outlet } from "react-router-dom";
 import { LayoutDashboard, ClipboardList, Settings, LogOut, ExternalLink, Loader2 } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
@@ -20,6 +21,7 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-[var(--ss-bg)] flex">
+      <Seo title="Admin" noindex />
       <aside className="hidden md:flex w-64 shrink-0 flex-col border-r border-[var(--ss-border)] bg-[var(--ss-bg-2)] sticky top-0 h-screen">
         <div className="p-5 border-b border-[var(--ss-border)]"><Logo className="h-10" /></div>
         <nav className="p-3 flex-1 space-y-1">

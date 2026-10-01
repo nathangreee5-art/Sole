@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check, Sparkles, ShieldCheck, CheckCircle2, Copy, ExternalLink, Search } from "lucide-react";
 import { toast } from "sonner";
@@ -114,6 +115,12 @@ export default function BookAClean() {
 
   return (
     <div className="ss-container py-10 sm:py-14">
+      <Seo
+        title="Book a Clean"
+        path="/book"
+        description="Book your shoe or sneaker clean in minutes. Choose Quick or Deep Clean, upload photos for assessment, and we handle tracked collection and return."
+        keywords="book shoe cleaning, order sneaker cleaning UK, trainer cleaning booking, shoe cleaning near me"
+      />
       <div className="max-w-5xl mx-auto">
         <div className="ss-eyebrow mb-2">Book a clean</div>
         <h1 className="font-display text-4xl sm:text-5xl text-[var(--ss-fg)]">Let&rsquo;s refresh your shoes</h1>

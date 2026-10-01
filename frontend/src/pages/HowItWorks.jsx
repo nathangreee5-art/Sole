@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,6 +27,12 @@ export default function HowItWorks() {
   const navigate = useNavigate();
   return (
     <div>
+      <Seo
+        title="How It Works — Mail-In Shoe Cleaning"
+        path="/how-it-works"
+        description="How Sole Serenity works: upload photos, get your shoes assessed and approved, pay securely, post them with a prepaid tracked label, and we clean and return them to your door."
+        keywords="mail in shoe cleaning, how shoe cleaning works, send shoes to be cleaned UK, postal sneaker cleaning, shoe cleaning process"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20">

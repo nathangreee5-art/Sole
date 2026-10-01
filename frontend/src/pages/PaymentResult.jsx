@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useSearchParams, Link } from "react-router-dom";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,7 @@ export default function PaymentResult() {
 
   return (
     <div className="ss-container py-24">
+      <Seo title="Payment" noindex />
       <div className="max-w-lg mx-auto ss-card p-10 text-center">
         {state === "checking" && (<><Loader2 className="h-12 w-12 mx-auto animate-spin text-[var(--ss-mint)]" /><h1 className="mt-6 font-display text-3xl text-[var(--ss-fg)]">Confirming your payment...</h1><p className="mt-2 text-[var(--ss-muted)]">This only takes a moment.</p></>)}
         {state === "paid" && (<><CheckCircle2 className="h-14 w-14 mx-auto text-[var(--ss-mint)]" /><h1 className="mt-6 font-display text-3xl text-[var(--ss-fg)]">Payment received!</h1><p className="mt-2 text-[var(--ss-muted)]">Thank you. We’re preparing your prepaid tracked label — you’ll get it by email and on your order page shortly.</p></>)}

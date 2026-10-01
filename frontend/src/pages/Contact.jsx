@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { Mail, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,12 @@ export default function Contact() {
 
   return (
     <div>
+      <Seo
+        title="Contact Us"
+        path="/contact"
+        description="Get in touch with Sole Serenity about our shoe and sneaker cleaning services, your order, or anything else. We usually reply within one business day."
+        keywords="contact shoe cleaning, sole serenity contact, sneaker cleaning enquiry, shoe cleaning help UK"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20">

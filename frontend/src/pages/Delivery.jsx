@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { Truck, ShieldCheck, PackageCheck, Receipt, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,12 @@ export default function Delivery() {
   ];
   return (
     <div>
+      <Seo
+        title="Delivery & Tracked Shipping"
+        path="/delivery"
+        description="Flat-rate, fully tracked UK delivery both ways. Prepaid Royal Mail labels, protective handling and door-to-door collection and return for your trainers."
+        keywords="tracked shoe delivery UK, prepaid shipping label, royal mail shoe cleaning, UK sneaker postage, shoe cleaning delivery"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20">

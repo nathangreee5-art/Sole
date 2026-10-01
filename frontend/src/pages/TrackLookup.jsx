@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
@@ -28,6 +29,12 @@ export default function TrackLookup() {
 
   return (
     <div>
+      <Seo
+        title="Track Your Order"
+        path="/track"
+        description="Track your Sole Serenity shoe cleaning order. Enter your order number and access code to see live status and tracking updates."
+        keywords="track shoe cleaning order, sole serenity order tracking"
+      />
       <section className="relative ss-noise"><div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16"><SectionHeading eyebrow="Track" title="Track your order" subtitle="Enter your order number and the access code from your confirmation email." /></div>
       </section>

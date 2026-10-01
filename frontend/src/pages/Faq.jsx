@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -10,8 +11,26 @@ export default function Faq() {
   const navigate = useNavigate();
   const [faq, setFaq] = useState([]);
   useEffect(() => { getFaq().then(setFaq).catch(() => {}); }, []);
+  const faqJsonLd = faq.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
   return (
     <div>
+      <Seo
+        title="Frequently Asked Questions"
+        path="/faq"
+        description="Answers about sending your shoes to Sole Serenity: turnaround times, what we can clean, delivery, payment and our photo assessment process."
+        keywords="shoe cleaning FAQ, sneaker cleaning questions, how long does shoe cleaning take, what shoes can you clean"
+        jsonLd={faqJsonLd}
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20">

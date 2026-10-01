@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import { Loader2, CreditCard, Download, Truck, Upload, PackageCheck } from "lucide-react";
 import { toast } from "sonner";
@@ -70,6 +71,7 @@ export default function OrderTracking() {
 
   return (
     <div className="ss-container py-10 sm:py-14">
+      <Seo title="Your Order" path="/track" noindex />
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

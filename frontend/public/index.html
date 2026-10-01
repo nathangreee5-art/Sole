@@ -5,18 +5,17 @@
         <link rel="icon" href="%PUBLIC_URL%/brand/logo-white.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#0b0d0e" />
-        <meta
-            name="description"
-            content="Sole Serenity — premium UK shoe & sneaker cleaning delivered to your door. Book a Quick Clean (£13) or Deep Clean (£18), send your trainers with tracked UK delivery. Photo assessment before you pay."
-        />
-        <meta name="keywords" content="shoe cleaning UK, sneaker cleaning UK, trainer cleaning Liverpool, shoe cleaning Liverpool, professional sneaker cleaning, shoe cleaning service, trainer cleaning service, UK shoe cleaning delivery" />
-        <meta name="robots" content="index, follow" />
 
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Sole Serenity" />
+        <meta property="og:url" content="https://soleserenity.co.uk/" />
         <meta property="og:title" content="Sole Serenity — Professional Shoe Cleaning, Delivered" />
-        <meta property="og:description" content="Give your shoes a second chance. Professional UK shoe cleaning delivered straight to your door. Photo assessment before you pay." />
+        <meta property="og:description" content="Premium UK shoe & sneaker cleaning delivered to your door. Photo assessment before you pay, with tracked UK delivery both ways." />
         <meta property="og:image" content="%PUBLIC_URL%/brand/logo-white.png" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sole Serenity — Professional Shoe Cleaning, Delivered" />
+        <meta name="twitter:description" content="Premium UK shoe & sneaker cleaning delivered to your door. Photo assessment before you pay, with tracked UK delivery both ways." />
+        <meta name="twitter:image" content="%PUBLIC_URL%/brand/logo-white.png" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,10 +28,19 @@
             {
                 "@context": "https://schema.org",
                 "@type": "LocalBusiness",
+                "@id": "https://soleserenity.co.uk/#business",
                 "name": "Sole Serenity",
-                "description": "Professional UK shoe and sneaker cleaning service with tracked delivery.",
-                "areaServed": "United Kingdom",
-                "priceRange": "££"
+                "image": "https://soleserenity.co.uk/brand/logo-white.png",
+                "logo": "https://soleserenity.co.uk/brand/logo-white.png",
+                "url": "https://soleserenity.co.uk",
+                "description": "Professional UK shoe and sneaker cleaning and restoration service with tracked door-to-door delivery. Photo assessment before you pay.",
+                "priceRange": "££",
+                "areaServed": { "@type": "Country", "name": "United Kingdom" },
+                "address": { "@type": "PostalAddress", "addressCountry": "GB" },
+                "makesOffer": [
+                    { "@type": "Offer", "name": "Quick Clean", "priceCurrency": "GBP", "category": "Shoe Cleaning" },
+                    { "@type": "Offer", "name": "Deep Clean", "priceCurrency": "GBP", "category": "Shoe Cleaning" }
+                ]
             }
         </script>
     </head>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2, Send, MessageSquare } from "lucide-react";
@@ -49,6 +50,7 @@ export default function Conversation() {
 
   return (
     <div className="ss-section">
+      <Seo title="Your Conversation" noindex />
       <div className="ss-container max-w-2xl">
         {loading ? (
           <div className="flex justify-center py-20"><Loader2 className="h-8 w-8 animate-spin text-[var(--ss-mint)]" /></div>

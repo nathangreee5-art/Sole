@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Logo } from "@/components/brand/Logo";
@@ -6,6 +7,12 @@ import { Logo } from "@/components/brand/Logo";
 export default function About() {
   return (
     <div>
+      <Seo
+        title="About Sole Serenity"
+        path="/about"
+        description="Sole Serenity is a UK shoe and sneaker cleaning and restoration service built on care, craft and honesty — we assess every pair from photos before you pay."
+        keywords="about sole serenity, UK shoe cleaning company, sneaker care specialists, trainer restoration UK"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20 grid lg:grid-cols-2 gap-10 items-center">

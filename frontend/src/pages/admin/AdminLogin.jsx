@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { Lock } from "lucide-react";
 import { toast } from "sonner";
@@ -32,6 +33,7 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--ss-bg)] px-4 ss-noise">
+      <Seo title="Admin Sign In" noindex />
       <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
       <div className="relative w-full max-w-md ss-card p-8">
         <Logo className="h-12" />

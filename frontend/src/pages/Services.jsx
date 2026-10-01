@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,30 @@ export default function Services() {
     return [1, 2, 3, 4].map((n) => ({ n, price: tiers[String(n)] }));
   };
 
+  const servicesJsonLd = data.services?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "OfferCatalog",
+        name: "Shoe Cleaning Services",
+        itemListElement: data.services.map((s) => ({
+          "@type": "Offer",
+          name: s.name,
+          price: s.price,
+          priceCurrency: "GBP",
+          description: s.tagline,
+        })),
+      }
+    : null;
+
   return (
     <div>
+      <Seo
+        title="Shoe Cleaning Services & Prices"
+        path="/services"
+        description="Quick Clean and Deep Clean services for trainers and sneakers with transparent per-pair pricing and flat-rate tracked UK delivery. Mix services across pairs in one order."
+        keywords="shoe cleaning prices UK, sneaker cleaning cost, trainer cleaning service, deep clean trainers, quick clean sneakers, sneaker restoration prices"
+        jsonLd={servicesJsonLd}
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16 sm:py-20">

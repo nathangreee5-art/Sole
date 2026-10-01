@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 
@@ -12,6 +13,12 @@ const Block = ({ title, children }) => (
 export default function Privacy() {
   return (
     <div>
+      <Seo
+        title="Privacy Policy"
+        path="/privacy"
+        description="How Sole Serenity collects, uses and protects your personal data when you use our shoe cleaning service."
+        keywords="sole serenity privacy policy, shoe cleaning privacy"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16"><Reveal><SectionHeading eyebrow="Legal" title="Privacy Policy" /></Reveal></div>

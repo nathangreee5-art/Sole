@@ -40,6 +40,14 @@ UK shoe-cleaning website + ordering system. Photo-assessment-first workflow: cus
 - Google "HTML not XML" error = the submitted URL returned HTML, i.e. soleserenity.co.uk not yet pointed to the app (registrar parked page) OR wrong host submitted. Sitemap <loc> URLs must match the live host.
 - PENDING user input: exact live/deployed domain. Once known, update sitemap <loc> + robots Sitemap line to match, then submit in Google Search Console.
 
+## SEO optimisation (session 5)
+- Added react-helmet-async + reusable Seo component (frontend/src/components/common/Seo.jsx); HelmetProvider in index.js.
+- Per-page unique titles, meta descriptions, business-matched keywords, canonical (https://soleserenity.co.uk + path) on all public pages: Home, Services, How It Works, Delivery, About, FAQ, Contact, Terms, Privacy, Book, Track.
+- robots: index,follow on public; noindex,nofollow on OrderTracking, PaymentResult, Conversation, AdminLogin, AdminLayout (all admin children).
+- Structured data: LocalBusiness (index.html, sitewide), FAQPage (FAQ page, from live FAQ data), OfferCatalog with Quick/Deep offers (Services page).
+- Cleaned index.html: single source of truth for OG/Twitter defaults + LocalBusiness JSON-LD; removed static description/keywords/robots to avoid duplicate meta (Helmet manages per-page). Verified descCount=1 per page.
+- NOTE: SPA (no SSR) — Google renders JS so sees per-page tags; social scrapers use the static OG defaults. Canonical domain = soleserenity.co.uk (update if live domain differs).
+
 ## Backlog / Next
 - P1: Claim Stripe sandbox (onboarding_url) + rotate the exposed live key before going live.
 - P1: Verify Mailgun DNS (SPF/DKIM/DMARC) so emails land in inbox.

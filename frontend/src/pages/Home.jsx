@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Seo } from "@/components/common/Seo";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Truck, ShieldCheck, Camera, Sparkles, PackageCheck, Send, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,11 @@ export default function Home() {
 
   return (
     <div>
+      <Seo
+        path="/"
+        description="Premium UK shoe & sneaker cleaning, delivered to your door. Book a Quick or Deep Clean, post your trainers with tracked UK delivery, and we assess your shoes from photos before you pay."
+        keywords="shoe cleaning UK, sneaker cleaning UK, trainer cleaning, professional shoe cleaning, sneaker restoration, trainer cleaning service, shoe cleaning delivery, mail in sneaker cleaning"
+      />
       {/* HERO */}
       <section className="relative overflow-hidden ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />

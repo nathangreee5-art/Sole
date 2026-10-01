@@ -1,4 +1,5 @@
 import React from "react";
+import { Seo } from "@/components/common/Seo";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 
@@ -12,6 +13,12 @@ const Block = ({ title, children }) => (
 export default function Terms() {
   return (
     <div>
+      <Seo
+        title="Terms & Conditions"
+        path="/terms"
+        description="The terms and conditions for using Sole Serenity's shoe cleaning and tracked delivery services."
+        keywords="sole serenity terms, shoe cleaning terms and conditions"
+      />
       <section className="relative ss-noise">
         <div className="absolute inset-0 ss-hero-glow pointer-events-none" />
         <div className="ss-container relative py-16"><Reveal><SectionHeading eyebrow="Legal" title="Terms & Conditions" /></Reveal></div>
